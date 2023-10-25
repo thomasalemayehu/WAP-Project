@@ -4,21 +4,29 @@ const bcrypt = require("bcrypt");
 
 const controller = {
   register: async (req, res) => {
-    const { userName, password } = req.body;
+    const { userName, ssn, email, password,name} = req.body;
+
+    console.log(userName,ssn,email,password,name);
     if (!userName) {
       throw new Error("Invalid username used");
     } else if (!password) {
       throw new Error("Password not provided");
     }
-    const newUser = await User.create({ userName, password });
+    const newUser = await User.create({ userName, password, ssn, email,name });
 
     const jwt = JWTHandler.generate(newUser.userName);
     res
       .status(201)
-      .json({ id: newUser.id, serName: newUser.userName, token: jwt });
+      .json({
+        id: newUser.id,
+        userName: newUser.userName,
+        token: jwt,
+        ssn: newUser.ssn,
+        email: newUser.email,
+        name:newUser.name,
+      });
   },
 
-  
   login: async (req, res) => {
     const { userName, password } = req.body;
 
@@ -29,6 +37,11 @@ const controller = {
     }
 
     const user = await User.findOne({ userName: userName });
+
+    if(!user) {
+      res.status(404).json({ message: "Invalid username and/or password" });
+      return;
+    }
 
     const isMatch = await user.comparePassword(password);
 
