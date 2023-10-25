@@ -5,28 +5,29 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true,"Name is required to register"],
-      
+      required: [true, "Name is required to register"],
+      validate: /^[A-Za-z]+$/,
     },
     userName: {
       type: String,
-      unique: [true,"Username already in use"],
-      required: [true,"username is required to register"],
+      unique: [true, "Username already in use"],
+      required: [true, "username is required to register"],
       validate: /^[a-zA-Z]{3,}$/,
     },
     email: {
       type: String,
-      required: [true,"Email is required"],
-      unique: [true,"Email is already in use"],
+      required: [true, "Email is required"],
+      unique: [true, "Email is already in use"],
+      validate: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
     ssn: {
       type: Number,
-      required: [true,"SSN is required"],
-      unique: [true,"SSN is already in use"],
+      required: [true, "SSN is required"],
+      unique: [true, "SSN is already in use"],
     },
     password: {
       type: String,
-      required: [true,"Password is required"],
+      required: [true, "Password is required"],
       validate:
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
     },

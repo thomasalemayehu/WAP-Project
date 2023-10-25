@@ -22,7 +22,7 @@
     <div class="row align-items-center vh-100 g-0 align-items-center">
       <div class="col-12 col-md-6 px-5 d-flex">
         <main class="form-signin w-100 m-auto">
-          <form>
+          <form id="register-form">
             <img
               class="d-block m-auto mb-4"
               src="./img/logo.png"
@@ -67,7 +67,7 @@
                 placeholder=""
                 value="123456"
                 required
-                pattern="^\d{3}-\d{2}-\d{4}$"
+                pattern="^d{3}-\d{2}-\d{4}$"
               />
               <label for="floatingInput">Social Security Number</label>
             </div>
@@ -91,7 +91,7 @@
                 id="password"
                 placeholder=""
                 value="StrongPass@123"
-                pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=*!])[A-Za-z\d@#$%^&+=*!]{8,}$/"
+                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=*!])[A-Za-z\d@#$%^&+=*!]{8,}$"
               />
               <label for="floatingPassword">Password</label>
             </div>
@@ -103,7 +103,7 @@
                 id="confirm-password"
                 placeholder=""
                 value="StrongPass@123"
-                pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=*!])[A-Za-z\d@#$%^&+=*!]{8,}$/"
+                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=*!])[A-Za-z\d@#$%^&+=*!]{8,}$"
               />
               <label for="floatingPassword">Confirm Password</label>
             </div>

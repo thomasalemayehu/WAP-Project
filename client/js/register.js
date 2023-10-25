@@ -1,4 +1,4 @@
-document.getElementById("registerButton").addEventListener("click", (e) => {
+document.getElementById("egister-form").addEventListener("submit", (e) => {
   e.preventDefault();
   register();
 });
@@ -51,6 +51,10 @@ async function registerRequest(userInfo) {
     },
     body: JSON.stringify(userInfo),
   };
-  const response = await fetch(`${BASE_API_URL}/auth/register`, options);
+  const response = await fetch(
+    `${BASE_API_URL}/auth/register`,
+    options,
+    REQUEST_TIMEOUT
+  );
   return response;
 }

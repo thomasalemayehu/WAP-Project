@@ -20,7 +20,7 @@
     <div class="row align-items-center vh-100 g-0 align-items-center">
       <div class="col-12 col-md-6 px-5 d-flex">
         <main class="form-signin w-100 m-auto">
-          <form>
+          <form id="sign-in-form">
             <img
               class="d-block m-auto mb-4"
               src="./img/logo.png"
@@ -39,6 +39,7 @@
                 value="Username"
                 required
                 autofocus
+                pattern="^[A-Za-z]+$"
               />
               <label for="floatingInput">Username</label>
             </div>
@@ -50,6 +51,7 @@
                 placeholder=""
                 value="StrongPass@123"
                 required
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$"
               />
               <label for="floatingPassword">Password</label>
             </div>

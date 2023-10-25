@@ -1,5 +1,5 @@
 const BASE_API_URL = "http://localhost:3000";
-
+const REQUEST_TIMEOUT = 10000;
 
 function alertDanger(container, message, timeout = 3000) {
   const alert = document.createElement("div");
@@ -49,3 +49,4 @@ function saveToSessionStorage(key,value){
 function getFromSessionStorage(key){
     return JSON.parse(sessionStorage.getItem(key));
 }
+
