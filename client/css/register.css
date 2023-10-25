@@ -1,0 +1,15 @@
+html,
+body {
+  height: 100%;
+}
+
+.form-signin {
+  max-width: 500px;
+  padding: 1rem;
+}
+
+#register-image {
+  background-image: url("../img/register.jpg");
+  object-fit: cover;
+  background-size: cover;
+}

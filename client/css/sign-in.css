@@ -1,0 +1,21 @@
+html,
+body {
+  height: 100%;
+}
+
+.form-signin {
+  max-width: 500px;
+  padding: 1rem;
+}
+
+#sign-in-image {
+  background-image: url("../img/sign-in.jpg");
+  object-fit: cover;
+  background-size: cover;
+}
+
+#register-image {
+  background-image: url("../img/register.jpg");
+  object-fit: cover;
+  background-size: cover;
+}

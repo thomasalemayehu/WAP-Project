@@ -1,0 +1,114 @@
+:root {
+  --blue-dark: #001e4c;
+  --blue-focus: #002f75;
+  --blue: #003b73;
+  --blue-light: #00509e;
+  --green: #00793d;
+  --green-light: #009247;
+  --green-dark: #004b20;
+  --green-focus: #008a3d;
+}
+
+.text-blue {
+  color: var(--blue);
+}
+
+.bg-blue {
+  background-color: var(--blue);
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--blue);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.btn-blue {
+  background-color: var(--blue);
+  border-color: var(--blue);
+}
+
+.btn-blue:hover {
+  background-color: var(--blue-light);
+  border-color: var(--blue-light);
+}
+
+.btn-blue:active {
+  background-color: var(--blue-dark);
+  border-color: var(--blue-dark);
+}
+
+.btn-blue:focus {
+  background-color: var(--blue-focus);
+  border-color: var(--blue-focus);
+}
+
+.btn-outline-blue {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.btn-outline-blue:hover {
+  color: white;
+  background-color: var(--blue);
+  border-color: var(--blue);
+}
+
+.btn-outline-blue:active {
+  color: white;
+  background-color: var(--blue-dark);
+  border-color: var(--blue-dark);
+}
+
+.btn-outline-blue:focus {
+  color: white;
+  background-color: var(--blue-focus);
+  border-color: var(--blue-focus);
+}
+
+.btn-green {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.btn-green:hover {
+  background-color: var(--green-light);
+  border-color: var(--green-light);
+}
+
+.btn-green:active {
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+.btn-green:focus {
+  background-color: var(--green-focus);
+  border-color: var(--green-focus);
+}
+
+.btn-outline-green {
+  color: var(--green);
+  border-color: var(--green);
+}
+.btn-outline-green:hover {
+  color: white;
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
+.btn-outline-green:active {
+  color: white;
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+.btn-outline-green:focus {
+  color: white;
+  background-color: var(--green-focus);
+  border-color: var(--green-focus);
+}
