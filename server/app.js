@@ -11,6 +11,8 @@ const morgan = require("morgan");
 
 const PORT = process.env.PORT || 3000;
 const ENV = process.env.ENV || "DEVELOPMENT";
+const cors = require("cors");
+
 
 const connectToDB = require("./config/db.config");
 
@@ -28,6 +30,7 @@ const accountRoutes = require("./routes/account.routes");
 
 //
 app.use(rateLimiter);
+app.use(cors())
 app.use(morgan("tiny"));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
