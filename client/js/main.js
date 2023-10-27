@@ -19,7 +19,7 @@ function alertDanger(container, message, timeout = 3000) {
   }, timeout);
 }
 
-function alertSuccess(container, message,timeout=3000) {
+function alertSuccess(container, message, timeout = 3000) {
   const alert = document.createElement("div");
   alert.classList.add("alert");
   alert.classList.add("alert-success");
@@ -37,16 +37,14 @@ function alertSuccess(container, message,timeout=3000) {
   }, timeout);
 }
 
-
-function redirectTo(relativePath){
-    window.location.href = relativePath;
+function redirectTo(relativePath) {
+  window.location.href = relativePath;
 }
 
-function saveToSessionStorage(key,value){
-    sessionStorage.setItem(key,JSON.stringify(value));
+function saveToSessionStorage(key, value) {
+  sessionStorage.setItem(key, JSON.stringify(value));
 }
 
-function getFromSessionStorage(key){
-    return JSON.parse(sessionStorage.getItem(key));
+function getFromSessionStorage(key) {
+  return JSON.parse(sessionStorage.getItem(key));
 }
-

@@ -2,12 +2,11 @@ const Account = require("../models/Account");
 
 const controller = {
   createAccount: async (req, res) => {
-    const { userId, balance, accountType } = req.body;
+    const { userId, balance } = req.body;
 
     const account = await Account.create({
       userId,
       balance,
-      accountType,
     });
 
     res.status(201).json(account);
@@ -17,7 +16,6 @@ const controller = {
     const { id } = req.params;
 
     const account = await Account.findOne({ accountId: id });
-
 
     res.status(200).json(account);
   },
@@ -31,66 +29,61 @@ const controller = {
 
     const { balance, accountType } = req.body;
 
-
     const account = await Account.findOneAndUpdate(
-        { accountId: id },
-        { balance, accountType },
-        { new: true }
+      { accountId: id },
+      { balance, accountType },
+      { new: true }
     );
-    console.log(account);
+
     res.status(200).json(account);
   },
 
-  deleteById: async(req,res)=>{
+  deleteById: async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
       throw new Error("Account Id not provided for update");
     }
 
-    const account = await Account.findOne({accountId:id});
+    const account = await Account.findOne({ accountId: id });
     await account.deleteOne();
 
     res.status(200).json(account);
   },
 
   withdraw: async (req, res) => {
-    const { id} = req.params;
-    const {routingNumber,accountNumber,amount} = req.body;
+    const { id } = req.params;
+    const { routingNumber, accountNumber, amount } = req.body;
 
-    if(!id) throw new Error("Account Id not provided for withdraw");
-
-
-    else if(!amount) throw new Error("Amount to withdraw not provided");
-
-    else if(!routingNumber) throw new Error("Routing Number is required for withdraw");
-
-    else if(!accountNumber) throw  new  Error("Account Number is required for withdraw");
+    if (!id) throw new Error("Account Id not provided for withdraw");
+    else if (!amount) throw new Error("Amount to withdraw not provided");
+    else if (!routingNumber)
+      throw new Error("Routing Number is required for withdraw");
+    else if (!accountNumber)
+      throw new Error("Account Number is required for withdraw");
 
     const account = await Account.findOne({ accountId: id });
 
-    await account.withdraw(amount,routingNumber,accountNumber);
+    await account.withdraw(amount, routingNumber, accountNumber);
     await account.save();
 
     res.status(200).json(account);
   },
 
   deposit: async (req, res) => {
-    const { id} = req.params;
-    const {routingNumber,accountNumber,amount} = req.body;
+    const { id } = req.params;
+    const { routingNumber, accountNumber, amount } = req.body;
 
-    if(!id) throw new Error("Account Id not provided for withdraw");
-
-
-    else if(!amount) throw new Error("Amount to withdraw not provided");
-
-    else if(!routingNumber) throw new Error("Routing Number is required for withdraw");
-
-    else if(!accountNumber) throw  new  Error("Account Number is required for withdraw");
+    if (!id) throw new Error("Account Id not provided for withdraw");
+    else if (!amount) throw new Error("Amount to withdraw not provided");
+    else if (!routingNumber)
+      throw new Error("Routing Number is required for withdraw");
+    else if (!accountNumber)
+      throw new Error("Account Number is required for withdraw");
 
     const account = await Account.findOne({ accountId: id });
 
-    await account.deposit(amount,routingNumber,accountNumber);
+    await account.deposit(amount, routingNumber, accountNumber);
     await account.save();
 
     res.status(200).json(account);
@@ -99,7 +92,7 @@ const controller = {
   getTransaction: async (req, res) => {
     const { id } = req.params;
 
-    if(!id) throw new Error("Account id is required to view transaction");
+    if (!id) throw new Error("Account id is required to view transaction");
 
     const account = await Account.findOne({ accountId: id });
 
@@ -110,12 +103,12 @@ const controller = {
     res.status(200).json(account.transactions);
   },
 
-  getTransactionById:async(req,res)=>{
-    const {id,transactionId} = req.params;
+  getTransactionById: async (req, res) => {
+    const { id, transactionId } = req.params;
 
-    if(!id) throw new Error("Account id is required to view transaction");
-
-    else if(!transactionId) throw new Error("Transaction id is required to view transaction");
+    if (!id) throw new Error("Account id is required to view transaction");
+    else if (!transactionId)
+      throw new Error("Transaction id is required to view transaction");
 
     const account = await Account.findOne({ accountId: id });
     if (!account) {
@@ -123,10 +116,11 @@ const controller = {
       return;
     }
 
+    let transaction = account.transactions.filter(
+      (transactionInfo) => transactionInfo._id.toString() === transactionId
+    );
 
-    let transaction = account.transactions.filter((transactionInfo)=> transactionInfo._id.toString()===transactionId);
-
-    if(transaction.length > 0) transaction = transaction[0];
+    if (transaction.length > 0) transaction = transaction[0];
     res.status(200).json(transaction);
   },
 
@@ -159,15 +153,15 @@ const controller = {
     res.status(200).json(senderAccount);
   },
 
-  generateCard:async(req,res) => {
-    const {id} = req.params;
+  generateCard: async (req, res) => {
+    const { id } = req.params;
 
-    if(!id) throw new  Error("Account id is required to generate card");
+    if (!id) throw new Error("Account id is required to generate card");
 
-    const account = await Account.findOne({accountId:id});
+    const account = await Account.findOne({ accountId: id });
 
-    if(!account){
-      res.status(404).json({message:"Account not found"});
+    if (!account) {
+      res.status(404).json({ message: "Account not found" });
     }
 
     const card = await account.generateATM();
@@ -176,30 +170,29 @@ const controller = {
     res.status(201).json(card);
   },
 
-  withdrawATM:async(req,res)=>{
-      const {id} = req.params;
+  withdrawATM: async (req, res) => {
+    const { id } = req.params;
 
-      const {cardNumber,pin,amount} = req.body;
+    console.log(id);
+    const { cardNumber, pin, amount } = req.body;
 
-    if(!id) throw new  Error("Account id is required to make ATM withdraw");
+    if (!id) throw new Error("Account id is required to make ATM withdraw");
+    else if (!cardNumber)
+      throw new Error("Card Number is required to make ATM withdraw");
+    else if (!pin) throw new Error("Pin is required to make ATM withdraw");
+    else if (!amount)
+      throw new Error("Amount is required to make ATM withdraw");
 
-    else if(!cardNumber) throw new  Error("Card Number is required to make ATM withdraw");
+    const account = await Account.findOne({ _id: id });
 
-    else if(!pin) throw new  Error("Pin is required to make ATM withdraw");
+    if (!account) {
+      return res.status(404).json({ message: "Account not found" });
+    }
 
-    else if(!amount) throw new  Error("Amount is required to make ATM withdraw");
-
-    const account = await Account.findOne({accountId:id});
-
-    if(!account) res.status(404).json({"message":"Account not found"});
-
-    await account.withdrawATM(amount,cardNumber,pin);
+    await account.withdrawATM(amount, cardNumber, pin);
 
     res.status(200).json(account);
-
-
-  }
-
+  },
 };
 
 module.exports = controller;

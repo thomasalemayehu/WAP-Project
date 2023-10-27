@@ -10,20 +10,20 @@ const userSchema = mongoose.Schema(
     },
     userName: {
       type: String,
-      unique: [true, "Username already in use"],
+      // unique: [true, "Username already in use"],
       required: [true, "username is required to register"],
       validate: /^[a-zA-Z]{3,}$/,
     },
     email: {
       type: String,
       required: [true, "Email is required"],
-      unique: [true, "Email is already in use"],
+      // unique: [true, "Email is already in use"],
       validate: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
     ssn: {
       type: Number,
       required: [true, "SSN is required"],
-      unique: [true, "SSN is already in use"],
+      // unique: [true, "SSN is already in use"],
     },
     password: {
       type: String,

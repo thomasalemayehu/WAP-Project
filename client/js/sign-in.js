@@ -1,7 +1,11 @@
-document.getElementById("sign-in-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  login();
-});
+function registerEventListeners() {
+  document.getElementById("sign-in-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    login();
+  });
+}
+
+window.onload = registerEventListeners;
 
 async function login() {
   const userNameInput = document.getElementById("username");
@@ -39,6 +43,10 @@ async function loginRequest(userInfo) {
     },
     body: JSON.stringify(userInfo),
   };
-  const response = await fetch(`${BASE_API_URL}/auth/login`, options,REQUEST_TIMEOUT);
+  const response = await fetch(
+    `${BASE_API_URL}/auth/login`,
+    options,
+    REQUEST_TIMEOUT
+  );
   return response;
 }

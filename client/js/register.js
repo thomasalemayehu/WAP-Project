@@ -1,7 +1,11 @@
-document.getElementById("egister-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  register();
-});
+function registerEventListeners() {
+  document.getElementById("register-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    register();
+  });
+}
+
+window.onload = registerEventListeners;
 
 async function register() {
   const nameInput = document.getElementById("name");
@@ -31,9 +35,11 @@ async function register() {
 
   const response = await registerRequest(userInfo);
   const responseBody = await response.json();
+
+  console.log(responseBody);
   if (response.status === 201) {
     alertSuccess(body, "Successful Registration");
-    saveToSessionStorage(responseBody);
+    saveToSessionStorage("userInfo", responseBody);
     redirectTo("../index.htm");
   } else {
     alertDanger(body, responseBody.message);
@@ -51,10 +57,6 @@ async function registerRequest(userInfo) {
     },
     body: JSON.stringify(userInfo),
   };
-  const response = await fetch(
-    `${BASE_API_URL}/auth/register`,
-    options,
-    REQUEST_TIMEOUT
-  );
+  const response = await fetch(`${BASE_API_URL}/auth/register`, options);
   return response;
 }
