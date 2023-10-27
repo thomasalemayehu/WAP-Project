@@ -33,7 +33,7 @@ async function transfer() {
     receiverId: receiverUserNameInput.value,
   };
 
-  const response = await transferRequest(transferInfo);
+  const response = await withdrawRequest(transferInfo);
   const responseBody = await response.json();
 
   if (response.status == 200) {
@@ -47,7 +47,7 @@ async function transfer() {
   transferForm.reset();
 }
 
-async function transferRequest(transferInfo) {
+async function withdrawRequest(transferInfo) {
   const options = {
     method: "GET",
     headers: {

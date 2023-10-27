@@ -8,8 +8,8 @@ router.get("/:id", accountController.getAccountById);
 router.put("/:id", accountController.updateById);
 router.delete("/:id", accountController.deleteById);
 
-router.post("/id/withdraw/:id", accountController.withdraw);
-router.post("/id/deposit/:id", accountController.deposit);
+router.post("/:id/withdraw", accountController.withdraw);
+router.post("/:id/deposit", accountController.deposit);
 router.get("/:id/transaction", accountController.getTransaction);
 router.get(
   "/:id/transaction/:transactionId",

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MicroBanka | Transfer</title>
+    <title>MicroBanka | Withdraw</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -47,13 +47,13 @@
             </li>
 
             <li>
-              <a href="transfer.htm" class="nav-link active">
+              <a href="transfer.htm" class="nav-link text-blue">
                 <i class="bi-arrow-left-right me-2"></i>
                 Transfer
               </a>
             </li>
             <li>
-              <a href="withdraw.htm" class="nav-link text-blue">
+              <a href="withdraw.htm" class="nav-link text-blue active">
                 <i class="bi-cash-coin me-2"></i>
                 Withdraw
               </a>
@@ -133,13 +133,13 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="transfer.htm" class="nav-link active">
+                  <a href="transfer.htm" class="nav-link text-blue">
                     <i class="bi-arrow-left-right me-2"></i>
                     Transfer
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="withdraw.htm" class="nav-link text-blue">
+                  <a href="withdraw.htm" class="nav-link active">
                     <i class="bi-cash-coin me-2"></i>
                     Withdraw
                   </a>
@@ -189,24 +189,34 @@
           <div id="main-content" class="p-4">
             <div class="row justify-content-center">
               <div class="px-4 pt-3 pb-5 col col-md-8">
-                <h1 class="display-6">Transfer Funds</h1>
+                <h1 class="display-6">Withdraw ( Cash Out )</h1>
                 <p class="mb-4">
-                  Please enter the recepient's username and the amount you would
-                  like to transfer.
+                  You can withdraw from your account by transferring funds to
+                  any other non MicroBanka bank account.
                 </p>
 
-                <form id="transfer-form">
+                <form id="withdraw-form">
                   <div class="form-floating mb-3">
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
-                      id="username"
+                      id="routing-number"
                       placeholder=""
                       required
                       autofocus
-                      pattern="^[A-Za-z]+$"
                     />
-                    <label for="floatingInput">Username</label>
+                    <label for="floatingInput">Routing Number</label>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="account-number"
+                      placeholder=""
+                      required
+                    />
+                    <label for="floatingInput">Account Number</label>
                   </div>
 
                   <div class="form-floating mb-3">
@@ -224,9 +234,9 @@
                   <button
                     class="btn btn-primary btn-blue w-100 py-2 mb-2"
                     type="submit"
-                    id="transfer-button"
+                    id="withdraw-button"
                   >
-                    Transfer
+                    Withdraw
                   </button>
                 </form>
               </div>
@@ -237,7 +247,7 @@
     </div>
 
     <script src="./js/main.js"></script>
-    <script src="./js/transfer.js"></script>
+    <script src="./js/withdraw.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
