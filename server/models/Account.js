@@ -194,12 +194,15 @@ accountSchema.methods.transfer = async function (
     this.transactions.push({
       description: `Transfer to ${receiverAccount.id} amount ${amountToTransfer}`,
       amount: amountToTransfer,
+      transactionType: "Transfer",
     });
     receiverAccount.transactions.push({
       description: `Transfer from ${this.id} amount ${amountToTransfer}`,
       amount: amountToTransfer,
+      transactionType: "Transfer",
     });
 
+    await this.save();
     await receiverAccount.save();
   }
 };

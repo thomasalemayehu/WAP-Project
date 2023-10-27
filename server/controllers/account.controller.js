@@ -1,5 +1,5 @@
 const Account = require("../models/Account");
-
+const User = require("../models/User");
 const controller = {
   createAccount: async (req, res) => {
     const { userId, balance } = req.body;
@@ -136,19 +136,25 @@ const controller = {
       throw new Error("Amount to transfer not found");
     }
 
-    const senderAccount = await Account.findOne({ accountId: senderId });
+    const senderAccount = await Account.findOne({ _id: senderId });
 
     if (!senderAccount) {
       throw new Error("Sender Account not found.");
     }
-    const receiverAccount = await Account.findOne({ accountId: receiverId });
+    console.log(senderAccount);
+    const receiverUser = await User.findOne({ userName: receiverId });
+
+    if (!receiverUser) throw new Error("Receiver user not found");
+
+    const receiverAccount = await Account.findOne({ userId: receiverUser.id });
+
+    console.log(receiverAccount);
 
     if (!receiverAccount) {
       throw new Error("Receiver Account not found.");
     }
 
     await senderAccount.transfer(amount, receiverAccount);
-    await senderAccount.save();
 
     res.status(200).json(senderAccount);
   },

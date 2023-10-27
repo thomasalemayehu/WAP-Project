@@ -35,12 +35,10 @@ async function register() {
 
   const response = await registerRequest(userInfo);
   const responseBody = await response.json();
-
-  console.log(responseBody);
   if (response.status === 201) {
     alertSuccess(body, "Successful Registration");
     saveToSessionStorage("userInfo", responseBody);
-    // redirectTo("../index.htm");
+    redirectTo("../index.htm");
   } else {
     alertDanger(body, responseBody.message);
   }
