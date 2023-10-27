@@ -17,11 +17,11 @@ const controller = {
     const jwt = JWTHandler.generate(newUser.userName);
     const id = newUser.id;
     const balance = 0;
-    const account = await Account.create({
-      userId:id,
+    let account = await Account.create({
+      userId: id,
       balance,
     });
-    console.log(account);
+    const card = await account.generateATM();
 
     res.status(201).json({
       id: newUser.id,
@@ -30,6 +30,7 @@ const controller = {
       email: newUser.email,
       name: newUser.name,
       accountId: account.id,
+      card: card,
     });
   },
 
@@ -55,11 +56,10 @@ const controller = {
       res.status(404).json({ message: "Invalid username and/or password" });
       return;
     }
-    
 
     const jwt = JWTHandler.generate(user.userName);
-    
-    const accountInfo = await Account.findOne({userId:user.id});
+
+    const accountInfo = await Account.findOne({ userId: user.id });
     console.log(accountInfo);
     res
       .status(200)

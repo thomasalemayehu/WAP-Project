@@ -40,7 +40,7 @@ async function register() {
   if (response.status === 201) {
     alertSuccess(body, "Successful Registration");
     saveToSessionStorage("userInfo", responseBody);
-    redirectTo("../index.htm");
+    // redirectTo("../index.htm");
   } else {
     alertDanger(body, responseBody.message);
   }

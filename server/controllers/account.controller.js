@@ -171,19 +171,15 @@ const controller = {
   },
 
   withdrawATM: async (req, res) => {
-    const { id } = req.params;
-
-    console.log(id);
     const { cardNumber, pin, amount } = req.body;
 
-    if (!id) throw new Error("Account id is required to make ATM withdraw");
-    else if (!cardNumber)
+    if (!cardNumber)
       throw new Error("Card Number is required to make ATM withdraw");
     else if (!pin) throw new Error("Pin is required to make ATM withdraw");
     else if (!amount)
       throw new Error("Amount is required to make ATM withdraw");
 
-    const account = await Account.findOne({ _id: id });
+    const account = await Account.findOne({ "card.cardNumber": cardNumber });
 
     if (!account) {
       return res.status(404).json({ message: "Account not found" });

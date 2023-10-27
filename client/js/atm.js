@@ -24,9 +24,8 @@ async function withdrawATM() {
     amount: amountInput.value,
   };
 
-  const { accountId } = getFromSessionStorage("userInfo");
   const body = document.getElementsByTagName("body")[0];
-  const response = await withdrawATMRequest(withdrawInfo, accountId);
+  const response = await withdrawATMRequest(withdrawInfo);
   const responseBody = await response.json();
 
   if (response.status == 200) {
@@ -39,7 +38,7 @@ async function withdrawATM() {
   withdrawButton.innerText = "Withdraw";
 }
 
-async function withdrawATMRequest(withdrawInfo, accountId) {
+async function withdrawATMRequest(withdrawInfo) {
   const options = {
     method: "POST",
     headers: {
@@ -48,9 +47,6 @@ async function withdrawATMRequest(withdrawInfo, accountId) {
     },
     body: JSON.stringify(withdrawInfo),
   };
-  const response = await fetch(
-    `${BASE_API_URL}/account/${accountId}/atm`,
-    options
-  );
+  const response = await fetch(`${BASE_API_URL}/account/atm`, options);
   return response;
 }
