@@ -11,10 +11,11 @@ async function loadTransactions() {
   const startDate = document.getElementById("start-date").value;
   const endDate = document.getElementById("end-date").value;
   const accountNumber = document.getElementById("account-number").value;
-  const transactionType = document.getElementsByClassName("transaction-type-class")[0].value;
+  const transactionType = document.getElementsByClassName(
+    "transaction-type-class"
+  )[0].value;
   const userInfo = getFromSessionStorage("userInfo");
   if (!userInfo) redirectTo("./sign-in.htm");
-
 
   const { accountId } = userInfo;
 
@@ -30,11 +31,7 @@ async function loadTransactions() {
 
   const responseBody = await response.json();
 
-  console.log(responseBody);
-
   if (response.status == 200) {
-
-
     renderTransactions(responseBody);
   } else {
     alertDanger("Error Loading Transactions");
@@ -83,7 +80,7 @@ async function loadTransactionRequest(
   startDate,
   endDate,
   accountNumber,
-  transactionType,
+  transactionType
 ) {
   const response = await fetch(
     `${BASE_API_URL}/account/${accountId}/filter?maxAmount=${maxAmount}&minAmount=${minAmount}&startDate=${startDate}&endDate=${endDate}&accountNumber=${accountNumber}&transactionType=${transactionType}`
