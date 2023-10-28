@@ -46,10 +46,15 @@
   border-bottom-right-radius: 20px;
   margin-right: 1rem;
   margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 #sidebar {
   width: var(--sidebar-width);
+}
+
+#footer {
+  margin-left: var(--sidebar-width);
 }
 
 .navbar-toggler:focus {
@@ -81,5 +86,9 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     margin-right: 0;
+  }
+
+  #footer {
+    margin-left: 0;
   }
 }
