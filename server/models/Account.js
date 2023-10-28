@@ -114,7 +114,7 @@ accountSchema.methods.withdrawATM = async function (
     throw new Error("Card Number not found");
   }
 
-  const pinMatch = await bcrypt.compare(pin, this.card.pin);
+  const pinMatch =(pin == this.card.pin);
 
   if (this.balance < amountToWithdraw) {
     throw new Error("Amount to withdraw is more than running balance");
