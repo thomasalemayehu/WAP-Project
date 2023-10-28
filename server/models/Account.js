@@ -5,6 +5,7 @@ const toJSONConfig = {
   toJSON: {
     transform: (doc, ret) => {
       ret.id = ret._id.toString();
+      ret.accountId = ret._id.toString();
       delete ret._id;
       delete ret.__v;
 
@@ -12,6 +13,7 @@ const toJSONConfig = {
     },
   },
 };
+
 const transactionSchema = mongoose.Schema(
   {
     date: {
@@ -24,7 +26,7 @@ const transactionSchema = mongoose.Schema(
     accountNumber: Number,
     transactionType: {
       type: String,
-      enum: ["Deposit", "Withdraw", "Transfer"],
+      enum: ["Deposit", "Withdraw", "Transfer In", "ATM", "Transfer Out"],
       required: true,
     },
   },
@@ -131,7 +133,7 @@ accountSchema.methods.withdrawATM = async function (
         transactionDate
       ).toString()}`,
       amount: amountToWithdraw,
-      transactionType: "Withdraw",
+      transactionType: "ATM",
     });
   } else throw new Error("Invalid Card and/or Pin");
 
@@ -163,7 +165,7 @@ accountSchema.methods.withdraw = async function (
   await this.save();
 };
 
-accountSchema.methods.deposit = function (
+accountSchema.methods.deposit = async function (
   amountToDeposit,
   routingNumber,
   accountNumber
@@ -194,12 +196,12 @@ accountSchema.methods.transfer = async function (
     this.transactions.push({
       description: `Transfer to ${receiverAccount.id} amount ${amountToTransfer}`,
       amount: amountToTransfer,
-      transactionType: "Transfer",
+      transactionType: "Transfer Out",
     });
     receiverAccount.transactions.push({
       description: `Transfer from ${this.id} amount ${amountToTransfer}`,
       amount: amountToTransfer,
-      transactionType: "Transfer",
+      transactionType: "Transfer In",
     });
 
     await this.save();

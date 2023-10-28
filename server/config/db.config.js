@@ -2,7 +2,8 @@ const coloredConsole = require("cli-color");
 
 const mongoose = require("mongoose");
 const DATABASE_URI = process.env.DB_URL;
-
+const dotEnv = require("dotenv");
+dotEnv.config();
 const ENV = process.env.ENV || "PRODUCTION";
 
 const connectToDB = async () => {
