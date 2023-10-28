@@ -18,7 +18,7 @@ function applyFilters() {
 
 
   allTransactions = allTransactions.filter(
-    (transaction) => !minAmountFilter || Filtertransaction.amount > minAmountFilter
+    (transaction) => !minAmountFilter || transaction.amount > minAmountFilter
   );
 
   console.log(allTransactions);
