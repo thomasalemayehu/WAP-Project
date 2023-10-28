@@ -1,7 +1,7 @@
 const BASE_API_URL = "http://localhost:3000";
 const REQUEST_TIMEOUT = 10000;
 
-function alertDanger(container, message, timeout = 3000) {
+function alertDanger(container, message, timeout = 8000) {
   const alert = document.createElement("div");
   alert.classList.add("alert");
   alert.classList.add("alert-danger");
@@ -19,7 +19,7 @@ function alertDanger(container, message, timeout = 3000) {
   }, timeout);
 }
 
-function alertSuccess(container, message, timeout = 3000) {
+function alertSuccess(container, message, timeout = 8000) {
   const alert = document.createElement("div");
   alert.classList.add("alert");
   alert.classList.add("alert-success");
