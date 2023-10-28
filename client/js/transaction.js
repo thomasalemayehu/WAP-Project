@@ -85,7 +85,7 @@ async function loadTransactionRequest(
   const response = await fetch(
     `${BASE_API_URL}/account/${accountId}/filter?maxAmount=${maxAmount}&minAmount=${minAmount}&startDate=${startDate}&endDate=${endDate}&accountNumber=${accountNumber}&transactionType=${transactionType}`,
     {
-      hearders: {
+      headers: {
         Authorization: getToken(),
       },
     }
