@@ -245,67 +245,46 @@ const controller = {
       accountNumber,
     } = req.query;
 
-  
-
-
-
-
     const account = await Account.findOne({ _id: id });
 
     if (!account) throw new Error("Account not found");
 
     let transactions = account.transactions;
 
-    console.log(transactions);
-
-
-
     if (minAmount != "" && minAmount != null) {
       transactions = transactions.filter(
         (transaction) => transaction.amount > minAmount
       );
-      console.log("Here 1");
     }
 
     if (maxAmount != null && maxAmount != "") {
       transactions = transactions.filter(
         (transaction) => transaction.amount < maxAmount
       );
-      console.log("Here 2");
     }
     console.log(transactionType != null);
     if (transactionType != null && transactionType != "") {
       transactions = transactions.filter(
         (transaction) => transaction.transactionType == transactionType
       );
-
-      console.log("here 3");
     }
 
     if (accountNumber != null && accountNumber != "") {
-      console.log(transactions);
       transactions = transactions.filter(
         (transaction) => transaction.accountNumber == accountNumber
       );
-
-      console.log(accountNumber);
-      console.log("here 4");
     }
     if (startDate != null && startDate != "") {
       transactions = transactions.filter(
         (transaction) => new Date(transaction.date) > new Date(startDate)
       );
-      console.log("here 5");
     }
 
     if (endDate != null && endDate != "") {
       transactions = transactions.filter(
         (transaction) => new Date(transaction.date) > new Date(endDate)
       );
-      console.log("here 6");
     }
-
-    // console.log(transactions);
 
     res.status(200).json(transactions);
   },
