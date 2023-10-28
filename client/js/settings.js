@@ -4,9 +4,61 @@ function registerEventListeners() {
     e.preventDefault();
     updateProfile();
   });
+
+  document
+    .getElementById("change-password-form")
+    .addEventListener("submit", (e) => {
+      e.preventDefault();
+      changePassword();
+    });
 }
 
 window.onload = registerEventListeners;
+
+async function changePassword() {
+  const form = document.getElementById("change-password-form");
+  const oldPasswordInput = document.getElementById("current-password");
+  const passwordInput = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirm-password");
+
+  const button = document.getElementById("change-password-button");
+  button.innerText = "Updating...";
+  button.setAttribute("disabled", true);
+
+  if (confirmPassword.value != passwordInput.value) {
+    alertDanger(body, "Passwords do not match");
+    return;
+  }
+
+  const body = document.getElementById("main-content");
+
+  const userInfo = getFromSessionStorage("userInfo");
+
+  if (!userInfo || !userInfo.accountId) {
+    redirectTo("./sign-in.htm");
+  }
+
+  const accountId = userInfo.accountId;
+
+  const data = {
+    oldPassword: oldPasswordInput.value,
+    newPassword: passwordInput.value,
+    senderId: accountId,
+  };
+
+  const response = await changePasswordRequest(data);
+  const responseBody = await response.json();
+
+  if (response.status == 200) {
+    alertSuccess(body, "Password change successful");
+  } else {
+    alertDanger(body, responseBody.message);
+  }
+
+  button.removeAttribute("disabled");
+  button.innerText = "Change Password";
+  form.reset();
+}
 
 async function updateProfile() {
   const form = document.getElementById("profile-form");
@@ -45,6 +97,25 @@ async function updateProfile() {
   button.removeAttribute("disabled");
   button.innerText = "Update";
   form.reset();
+}
+
+async function changePasswordRequest(data) {
+  const options = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify(data),
+  };
+
+  const response = await fetch(
+    `${BASE_API_URL}/auth/${data.senderId}/reset`,
+    options
+  );
+
+  return response;
 }
 
 async function updateRequest(data) {
