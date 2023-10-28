@@ -57,6 +57,10 @@
   box-shadow: none;
 }
 
+.bi-person {
+  font-size: 1.5rem;
+}
+
 @media (max-width: 992px) {
   #main {
     margin-left: 0;
