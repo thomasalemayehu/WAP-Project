@@ -11,9 +11,45 @@ function registerEventListeners() {
       e.preventDefault();
       changePassword();
     });
+
+  document
+    .getElementById("delete-account-button")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+      deleteAccount();
+    });
 }
 
 window.onload = registerEventListeners;
+
+async function deleteAccount() {
+  const body = document.getElementById("main-content");
+
+  const userInfo = getFromSessionStorage("userInfo");
+
+  if (!userInfo || !userInfo.accountId) {
+    redirectTo("./sign-in.htm");
+  }
+
+  const accountId = userInfo.accountId;
+
+  const data = {
+    senderId: accountId,
+  };
+
+  const response = await deleteAccountRequest(data);
+
+  if (response.status == 200) {
+    alertSuccess(body, "Password change successful");
+    logout();
+  } else {
+    alertDanger(body, responseBody.message);
+  }
+
+  button.removeAttribute("disabled");
+  button.innerText = "Change Password";
+  form.reset();
+}
 
 async function changePassword() {
   const form = document.getElementById("change-password-form");
@@ -97,6 +133,23 @@ async function updateProfile() {
   button.removeAttribute("disabled");
   button.innerText = "Update";
   form.reset();
+}
+
+async function deleteAccountRequest(data) {
+  const options = {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(
+    `${BASE_API_URL}/account/${data.senderId}`,
+    options
+  );
+
+  return response;
 }
 
 async function changePasswordRequest(data) {

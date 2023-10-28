@@ -10,6 +10,7 @@ function registerEventListeners() {
 window.onload = registerEventListeners;
 
 async function withdrawATM() {
+  const form = document.getElementById("withdraw-form");
   const cardNumberInput = document.getElementById("card");
   const pinInput = document.getElementById("pin");
   const amountInput = document.getElementById("amount");
@@ -24,12 +25,13 @@ async function withdrawATM() {
     amount: amountInput.value,
   };
 
-  const body = document.getElementsByTagName("body")[0];
+  const body = document.getElementById("atm-withdraw-form");
   const response = await withdrawATMRequest(withdrawInfo);
   const responseBody = await response.json();
 
   if (response.status == 200) {
     alertSuccess(body, "Money withdrawn successfully");
+    form.reset();
   } else {
     alertDanger(body, `${responseBody.message}`);
   }

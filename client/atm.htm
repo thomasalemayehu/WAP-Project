@@ -25,7 +25,7 @@
 
       <div class="col-12 col-md-6 px-5 d-flex">
         <main class="form-signin w-100 m-auto" id="atm-withdraw-form">
-          <form>
+          <form id="withdraw-form">
             <img
               class="d-block m-auto mb-4"
               src="./img/logo.png"
@@ -42,7 +42,6 @@
                 id="card"
                 placeholder=""
                 required
-               
               />
               <label for="floatingInput">Card Number</label>
             </div>
@@ -53,8 +52,7 @@
                 id="pin"
                 placeholder=""
                 required
-             
-                pattern="^\d{3}$"
+                pattern="^\d{4}$"
               />
               <label for="floatingPassword">Pin</label>
             </div>
@@ -67,7 +65,6 @@
                 placeholder=""
                 required
                 min="20"
-      
                 max="10000"
               />
               <label for="floatingInput">Amount</label>
