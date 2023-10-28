@@ -72,11 +72,13 @@ const controller = {
 
     if (!id) throw new Error("User Id is not provided");
 
+     const account = await Account.findOne({ _id: id });
+
     if (!oldPassword)
       throw new Error("Current password is required to change password");
     else if (!newPassword) throw new Error("No password is provided");
 
-    const user = await User.findOne({ _id: id });
+    const user = await User.findOne({ _id: account.userId });
 
     if (!user) throw new Error("User not found");
 
@@ -108,8 +110,6 @@ const controller = {
     const user = await User.findOneAndUpdate({ _id: account.userId }, profile, {
       new: true,
     });
-
-    console.log(user,id);
 
     res.status(200).json(user);
   },
