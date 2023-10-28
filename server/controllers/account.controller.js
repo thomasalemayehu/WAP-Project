@@ -217,7 +217,7 @@ const controller = {
     result.transferIns = transactions
       .filter((transaction) => transaction.transactionType == "Transfer In")
       .reduce((sum, transaction) => (sum += transaction.amount), 0);
-    result.totalTransfers = transactions
+    result.transferOuts = transactions
       .filter((transaction) => transaction.transactionType == "Transfer Out")
       .reduce((sum, transaction) => (sum += transaction.amount), 0);
 

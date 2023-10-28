@@ -94,16 +94,12 @@ accountSchema.methods.generatePin = function () {
 accountSchema.methods.generateATM = async function () {
   const cardNumber = this.generateCardNumber();
   const pin = this.generatePin();
-
-  const salt = await bcrypt.genSalt();
-  const hashedPin = await bcrypt.hash(pin, salt);
-
   const card = {
     cardNumber: cardNumber,
     pin: pin,
   };
 
-  this.card = { cardNumber, pin: hashedPin };
+  this.card = { cardNumber, pin: pin };
 
   await this.save();
   return card;
