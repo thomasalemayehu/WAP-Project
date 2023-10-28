@@ -48,3 +48,41 @@ function saveToSessionStorage(key, value) {
 function getFromSessionStorage(key) {
   return JSON.parse(sessionStorage.getItem(key));
 }
+
+function removeFromSessionStorage(key) {
+  sessionStorage.removeItem(key);
+}
+
+function checkLoggedIn() {
+  const pathname = window.location.pathname;
+  const userInfo = getFromSessionStorage("userInfo");
+  if (
+    !pathname.startsWith("/sign-in.htm") &&
+    !pathname.startsWith("/register.htm") &&
+    !pathname.startsWith("/atm.htm") &&
+    (!userInfo || !userInfo.accountId)
+  ) {
+    redirectTo("./sign-in.htm");
+  }
+}
+
+function logout() {
+  removeFromSessionStorage("userInfo");
+  redirectTo("./sign-in.htm");
+}
+
+function setUserName() {
+  const userInfo = getFromSessionStorage("userInfo");
+  const userNames = document.getElementsByClassName("username-label");
+
+  for (let i = 0; i < userNames.length; i++) {
+    userNames[i].innerText = userInfo.userName;
+  }
+}
+
+function alwaysRun() {
+  checkLoggedIn();
+  setUserName();
+}
+
+alwaysRun();
