@@ -15,7 +15,7 @@ const controller = {
   getAccountById: async (req, res) => {
     const { id } = req.params;
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
 
     res.status(200).json(account);
   },
@@ -30,7 +30,7 @@ const controller = {
     const { balance, accountType } = req.body;
 
     const account = await Account.findOneAndUpdate(
-      { accountId: id },
+      { _id: id },
       { balance, accountType },
       { new: true }
     );
@@ -45,7 +45,7 @@ const controller = {
       throw new Error("Account Id not provided for update");
     }
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
     await account.deleteOne();
 
     res.status(200).json(account);
@@ -62,7 +62,7 @@ const controller = {
     else if (!accountNumber)
       throw new Error("Account Number is required for withdraw");
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
 
     await account.withdraw(amount, routingNumber, accountNumber);
     await account.save();
@@ -81,7 +81,7 @@ const controller = {
     else if (!accountNumber)
       throw new Error("Account Number is required for withdraw");
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
 
     await account.deposit(amount, routingNumber, accountNumber);
     await account.save();
@@ -94,7 +94,7 @@ const controller = {
 
     if (!id) throw new Error("Account id is required to view transaction");
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
 
     if (!account) {
       res.status(404).json({ message: "Account not found" });
@@ -110,7 +110,7 @@ const controller = {
     else if (!transactionId)
       throw new Error("Transaction id is required to view transaction");
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
     if (!account) {
       res.status(404).json({ message: "Account not found" });
       return;
@@ -164,7 +164,7 @@ const controller = {
 
     if (!id) throw new Error("Account id is required to generate card");
 
-    const account = await Account.findOne({ accountId: id });
+    const account = await Account.findOne({ _id: id });
 
     if (!account) {
       res.status(404).json({ message: "Account not found" });
@@ -194,6 +194,35 @@ const controller = {
     await account.withdrawATM(amount, cardNumber, pin);
 
     res.status(200).json(account);
+  },
+
+  accountInfo: async (req, res) => {
+    const { id } = req.params;
+    const account = await Account.findOne({ _id: id });
+
+    if (!account) throw new Error("Account not found");
+    const result = {};
+
+    const transactions = account.transactions;
+    result.balance = account.balance;
+    result.totalWithdraw = transactions
+      .filter((transaction) => transaction.transactionType == "Withdraw")
+      .reduce((sum, transaction) => (sum += transaction.amount), 0);
+    result.totalDeposit = transactions
+      .filter((transaction) => transaction.transactionType == "Deposit")
+      .reduce((sum, transaction) => (sum += transaction.amount), 0);
+    result.atmTransactions = transactions
+      .filter((transaction) => transaction.transactionType == "ATM")
+      .reduce((sum, transaction) => (sum += transaction.amount), 0);
+    result.transferIns = transactions
+      .filter((transaction) => transaction.transactionType == "Transfer In")
+      .reduce((sum, transaction) => (sum += transaction.amount), 0);
+    result.totalTransfers = transactions
+      .filter((transaction) => transaction.transactionType == "Transfer Out")
+      .reduce((sum, transaction) => (sum += transaction.amount), 0);
+
+    result.card = account.card;
+    res.status(200).json(result);
   },
 };
 

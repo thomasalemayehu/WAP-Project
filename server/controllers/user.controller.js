@@ -4,6 +4,7 @@ const JWTHandler = require("../utils/JWTHandler");
 const bcrypt = require("bcrypt");
 
 const controller = {
+  
   register: async (req, res) => {
     const { userName, ssn, email, password, name } = req.body;
 
