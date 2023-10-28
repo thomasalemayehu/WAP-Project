@@ -1,20 +1,20 @@
 function registerEventListeners() {
-  document.getElementById("deposit-form").addEventListener("submit", (e) => {
+  populateData();
+  document.getElementById("profile-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    withdraw();
+    updateProfile();
   });
 }
 
 window.onload = registerEventListeners;
 
-async function withdraw() {
-  const form = document.getElementById("deposit-form");
-  const routingNumberInput = document.getElementById("routing-number");
-  const accountNumberInput = document.getElementById("account-number");
-  const amountInput = document.getElementById("amount");
+async function updateProfile() {
+  const form = document.getElementById("profile-form");
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
 
-  const button = document.getElementById("deposit-button");
-  button.innerText = "Depositing...";
+  const button = document.getElementById("update-profile-button");
+  button.innerText = "Updating...";
   button.setAttribute("disabled", true);
 
   const body = document.getElementById("main-content");
@@ -28,9 +28,8 @@ async function withdraw() {
   const accountId = userInfo.accountId;
 
   const data = {
-    amount: amountInput.value,
-    routingNumber: routingNumberInput.value,
-    accountNumber: accountNumberInput.value,
+    name: nameInput.value,
+    email: emailInput.value,
     senderId: accountId,
   };
 
@@ -38,30 +37,45 @@ async function withdraw() {
   const responseBody = await response.json();
 
   if (response.status == 200) {
-    alertSuccess(body, "Deposit successful");
+    alertSuccess(body, "Update successful");
   } else {
     alertDanger(body, responseBody.message);
   }
 
   button.removeAttribute("disabled");
-  button.innerText = "Deposit";
+  button.innerText = "Update";
   form.reset();
 }
 
 async function updateRequest(data) {
   const options = {
-    method: "POST",
+    method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+
     body: JSON.stringify(data),
   };
 
   const response = await fetch(
-    `${BASE_API_URL}/account/${data.senderId}/deposit`,
+    `${BASE_API_URL}/auth/${data.senderId}/profile`,
     options
   );
 
   return response;
+}
+
+function populateData() {
+  user = getFromSessionStorage("userInfo");
+
+  if (!user || !user.accountId) {
+    redirectTo("./sign-in.htm");
+  }
+
+  insertData("username", user.userName);
+}
+
+function insertData(id, data) {
+  document.getElementById(id).value = data;
 }

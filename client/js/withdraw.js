@@ -1,13 +1,13 @@
 function registerEventListeners() {
   document.getElementById("withdraw-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    deposit();
+    withdraw();
   });
 }
 
 window.onload = registerEventListeners;
 
-async function deposit() {
+async function withdraw() {
   const form = document.getElementById("withdraw-form");
   const routingNumberInput = document.getElementById("routing-number");
   const accountNumberInput = document.getElementById("account-number");
@@ -34,7 +34,7 @@ async function deposit() {
     senderId: accountId,
   };
 
-  const response = await depositRequest(data);
+  const response = await updateRequest(data);
   const responseBody = await response.json();
 
   if (response.status == 200) {
@@ -48,7 +48,7 @@ async function deposit() {
   form.reset();
 }
 
-async function depositRequest(data) {
+async function updateRequest(data) {
   const options = {
     method: "POST",
     headers: {
