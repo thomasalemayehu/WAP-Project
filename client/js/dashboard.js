@@ -38,7 +38,7 @@ async function getData() {
   insertData("card-3", card3);
   insertData("card-4", card4);
 
-  insertData("card-cvv", responseBody.card.cvv || "000");
+  insertData("card-pin", responseBody.card.pin || "000");
   insertData("card-name", responseBody.name || "");
 }
 
