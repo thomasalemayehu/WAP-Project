@@ -52,7 +52,7 @@ function renderTransactions(allTransactions) {
       const description = document.createElement("td");
 
       transactionId.innerText = transaction.id.toString();
-      date.innerText = transaction.date;
+      date.innerText = new Date(transaction.date).toLocaleString();
       type.innerText = transaction.transactionType;
       amount.innerText = transaction.amount;
       routing.innerText = transaction.routingNumber ?? "-";
