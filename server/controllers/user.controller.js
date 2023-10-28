@@ -91,7 +91,7 @@ const controller = {
   updateProfile: async (req, res) => {
     const { id } = req.params;
 
-    const { name, email, ssn } = req.body;
+    const { name, email } = req.body;
 
     if (!id) throw new Error("User Id not provided");
 
@@ -100,8 +100,6 @@ const controller = {
     if (name) profile.name = name;
 
     if (email) profile.email = email;
-
-    if (ssn) profile.ssn = ssn;
 
     const user = await User.findOneAndUpdate({ _id: id }, profile, {
       new: true,
