@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, "Name is required to register"],
-      validate: /^[A-Za-z]+$/,
+      // validate: /^[A-Za-z]+$/,
     },
     userName: {
       type: String,

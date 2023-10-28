@@ -21,7 +21,7 @@ function applyFilters() {
     (transaction) => !minAmountFilter || transaction.amount > minAmountFilter
   );
 
-  console.log(allTransactions);
+  renderTransactions();
 }
 async function loadTransactions() {
   const userInfo = getFromSessionStorage("userInfo");
@@ -44,27 +44,37 @@ async function loadTransactions() {
 }
 function renderTransactions(allTransactions) {
   const transactionTable = document.getElementById("transaction-body");
-  allTransactions.forEach((transaction) => {
-    const tr = document.createElement("tr");
-    const transactionId = document.createElement("td");
-    const date = document.createElement("td");
-    const type = document.createElement("td");
-    const amount = document.createElement("td");
-    const routing = document.createElement("td");
-    const account = document.createElement("td");
-    const description = document.createElement("td");
+  if(allTransactions.length>0){
+    allTransactions.forEach((transaction) => {
+      const tr = document.createElement("tr");
+      const transactionId = document.createElement("td");
+      const date = document.createElement("td");
+      const type = document.createElement("td");
+      const amount = document.createElement("td");
+      const routing = document.createElement("td");
+      const account = document.createElement("td");
+      const description = document.createElement("td");
 
-    transactionId.innerText = transaction.id.toString();
-    date.innerText = transaction.date;
-    type.innerText = transaction.transactionType;
-    amount.innerText = transaction.amount;
-    routing.innerText = transaction.routingNumber ?? "-";
-    account.innerText = transaction.accountNumber ?? "-";
-    description.innerText = transaction.description;
+      transactionId.innerText = transaction.id.toString();
+      date.innerText = transaction.date;
+      type.innerText = transaction.transactionType;
+      amount.innerText = transaction.amount;
+      routing.innerText = transaction.routingNumber ?? "-";
+      account.innerText = transaction.accountNumber ?? "-";
+      description.innerText = transaction.description;
 
-    tr.append(transactionId, date, type, amount, routing, account, description);
-    transactionTable.append(tr);
-  });
+      tr.append(
+        transactionId,
+        date,
+        type,
+        amount,
+        routing,
+        account,
+        description
+      );
+      transactionTable.append(tr);
+    });
+  }
 }
 
 async function loadTransactionRequest(accountId) {

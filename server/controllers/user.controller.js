@@ -101,9 +101,15 @@ const controller = {
 
     if (email) profile.email = email;
 
-    const user = await User.findOneAndUpdate({ _id: id }, profile, {
+    const account = await Account.findOne({ _id: id });
+
+    if (!account) throw new Error("Account not found");
+
+    const user = await User.findOneAndUpdate({ _id: account.userId }, profile, {
       new: true,
     });
+
+    console.log(user,id);
 
     res.status(200).json(user);
   },

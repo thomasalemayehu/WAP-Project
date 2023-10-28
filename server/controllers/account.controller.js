@@ -222,13 +222,53 @@ const controller = {
       .reduce((sum, transaction) => (sum += transaction.amount), 0);
 
     result.card = account.card;
-    const {userId} =account;
+    const { userId } = account;
 
-    const user = await User.findOne({_id:userId});
+    const user = await User.findOne({ _id: userId });
 
-    if(!user) throw new Error("User not found");
+    if (!user) throw new Error("User not found");
     result.name = user.name;
     res.status(200).json(result);
+  },
+
+  filterTransaction: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) throw new Error("No user id provided");
+
+    const {
+      minAmount,
+      maxAmount,
+      startDate,
+      endDate,
+      transactionType,
+      accountNumber,
+    } = req.query;
+
+    const account = await Account.findOne({ _id: id });
+
+    if (!account) throw new Error("Account not found");
+
+    let transactions = account.transactions;
+
+    if (minAmount)
+      transactions = transactions.filter(
+        (transaction) => transaction.amount > minAmount
+      );
+    if (maxAmount)
+      transactions = transactions.filter(
+        (transaction) => transaction.amount < maxAmount
+      );
+    if (transactionType)
+      transactions = transactions.filter(
+        (transaction) => transaction.transactionType == transactionType
+      );
+    if (accountNumber)
+      transactions = transactions.filter(
+        (transaction) => transaction.accountNumber == accountNumber
+      );
+
+    res.status(200).json(transactions);
   },
 };
 

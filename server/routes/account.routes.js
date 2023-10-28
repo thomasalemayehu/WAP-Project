@@ -20,4 +20,7 @@ router.get("/:senderId/transfer/:receiverId", accountController.transferById);
 router.post("/:id/atm/generate", accountController.generateCard);
 router.post("/atm", accountController.withdrawATM);
 router.get("/:id/info", accountController.accountInfo);
+router.get("/:id/filter",accountController.filterTransaction);
+
+
 module.exports = router;
