@@ -222,6 +222,12 @@ const controller = {
       .reduce((sum, transaction) => (sum += transaction.amount), 0);
 
     result.card = account.card;
+    const {userId} =account;
+
+    const user = await User.findOne({_id:userId});
+
+    if(!user) throw new Error("User not found");
+    result.name = user.name;
     res.status(200).json(result);
   },
 };

@@ -14,11 +14,11 @@ function applyFilters() {
   const maxAmountFilter = document.getElementById("max-amount").value;
   const startDate = document.getElementById("start-date").value;
   const accountNumber = document.getElementById("account-number").value;
-  const transactionType = document.getElementById("transaction-type").value;
+//   const transactionType = document.getElementById("transaction-type").value;
 
 
   allTransactions = allTransactions.filter(
-    (transaction) => transaction.amount > minAmountFilter
+    (transaction) => !minAmountFilter || Filtertransaction.amount > minAmountFilter
   );
 
   console.log(allTransactions);
