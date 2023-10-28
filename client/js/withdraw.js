@@ -54,6 +54,7 @@ async function updateRequest(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
 
     body: JSON.stringify(data),

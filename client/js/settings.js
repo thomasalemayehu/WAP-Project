@@ -141,6 +141,7 @@ async function deleteAccountRequest(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
   };
 
@@ -158,6 +159,7 @@ async function changePasswordRequest(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
 
     body: JSON.stringify(data),
@@ -177,6 +179,7 @@ async function updateRequest(data) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
 
     body: JSON.stringify(data),

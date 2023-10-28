@@ -53,6 +53,7 @@ async function withdrawRequest(transferInfo) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
   };
 

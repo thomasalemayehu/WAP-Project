@@ -52,6 +52,7 @@ async function getDataRequest(data) {
     method: "GET",
     headers: {
       Accept: "application/json",
+      Authorization: getToken(),
     },
   };
 

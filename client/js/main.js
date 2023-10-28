@@ -49,6 +49,12 @@ function getFromSessionStorage(key) {
   return JSON.parse(sessionStorage.getItem(key));
 }
 
+function getToken() {
+  const userInfo = getFromSessionStorage("userInfo");
+  if (!userInfo?.token) redirectTo("./sign-in.htm");
+  return `Bearer ${userInfo.token}`;
+}
+
 function removeFromSessionStorage(key) {
   sessionStorage.removeItem(key);
 }
