@@ -5,6 +5,11 @@ document.getElementById("search-button").addEventListener("click", (e) => {
   loadTransactions();
 });
 
+document.getElementById("clear-button").addEventListener("click", (e) => {
+  document.getElementById("search-form").reset();
+  loadTransactions();
+});
+
 async function loadTransactions() {
   const minAmountFilter = document.getElementById("min-amount").value;
   const maxAmountFilter = document.getElementById("max-amount").value;
