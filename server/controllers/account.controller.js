@@ -286,7 +286,7 @@ const controller = {
       );
     }
 
-    res.status(200).json(transactions);
+    res.status(200).json(transactions.reverse());
   },
 };
 
