@@ -91,4 +91,8 @@
   #footer {
     margin-left: 0;
   }
+
+  #main-section {
+    height: 100vh;
+  }
 }
