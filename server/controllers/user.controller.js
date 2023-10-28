@@ -4,7 +4,6 @@ const JWTHandler = require("../utils/JWTHandler");
 const bcrypt = require("bcrypt");
 
 const controller = {
-  
   register: async (req, res) => {
     const { userName, ssn, email, password, name } = req.body;
 
@@ -65,6 +64,50 @@ const controller = {
     res
       .status(200)
       .json({ id: user.id, userName, token: jwt, accountId: accountInfo.id });
+  },
+
+  reset: async (req, res) => {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    if (!id) throw new Error("User Id is not provided");
+
+    if (!oldPassword)
+      throw new Error("Current password is required to change password");
+    else if (!newPassword) throw new Error("No password is provided");
+
+    const user = await User.findOne({ _id: id });
+
+    if (!user) throw new Error("User not found");
+
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(newPassword, salt);
+    user.password = password;
+    await user.save();
+
+    res.status(200).json(user);
+  },
+
+  updateProfile: async (req, res) => {
+    const { id } = req.params;
+
+    const { name, email, ssn } = req.body;
+
+    if (!id) throw new Error("User Id not provided");
+
+    const profile = {};
+
+    if (name) profile.name = name;
+
+    if (email) profile.email = email;
+
+    if (ssn) profile.ssn = ssn;
+
+    const user = await User.findOneAndUpdate({ _id: id }, profile, {
+      new: true,
+    });
+
+    res.status(200).json(user);
   },
 };
 

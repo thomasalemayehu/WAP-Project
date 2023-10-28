@@ -44,7 +44,8 @@ const transactionSchema = mongoose.Schema(
 
 const atmSchema = mongoose.Schema({
   cardNumber: Number,
-  pin: String,
+  pin: Number,
+  cvv: Number,
 });
 
 const accountSchema = mongoose.Schema(
@@ -74,7 +75,7 @@ const accountSchema = mongoose.Schema(
 accountSchema.methods.generateCardNumber = function () {
   let bankCardNumber = "8";
 
-  for (let i = 1; i < 15; i++) {
+  for (let i = 1; i < 16; i++) {
     bankCardNumber += Math.floor(Math.random() * 10).toString();
   }
 
@@ -94,12 +95,18 @@ accountSchema.methods.generatePin = function () {
 accountSchema.methods.generateATM = async function () {
   const cardNumber = this.generateCardNumber();
   const pin = this.generatePin();
+  const cvv = this.generatePin();
   const card = {
     cardNumber: cardNumber,
     pin: pin,
+    cvv: cvv,
   };
 
-  this.card = { cardNumber, pin: pin };
+  this.card = {
+    cardNumber: cardNumber,
+    pin: pin,
+    cvv: cvv,
+  };
 
   await this.save();
   return card;
@@ -114,7 +121,7 @@ accountSchema.methods.withdrawATM = async function (
     throw new Error("Card Number not found");
   }
 
-  const pinMatch =(pin == this.card.pin);
+  const pinMatch = pin == this.card.pin;
 
   if (this.balance < amountToWithdraw) {
     throw new Error("Amount to withdraw is more than running balance");
