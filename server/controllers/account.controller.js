@@ -268,6 +268,15 @@ const controller = {
         (transaction) => transaction.accountNumber == accountNumber
       );
 
+    if (startDate)
+      transactions = transactions.filter(
+        (transaction) => new Date(transaction.date) > new Date(startDate)
+      );
+    if (endDate)
+      transactions = transactions.filter(
+        (transaction) => new Date(transaction.date) > new Date(endDate)
+      );
+
     res.status(200).json(transactions);
   },
 };

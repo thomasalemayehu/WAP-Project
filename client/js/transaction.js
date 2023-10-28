@@ -3,27 +3,13 @@ window.onload = loadTransactions;
 document.getElementById("search-button").addEventListener("click", (e) => {
   e.preventDefault();
   applyFilters();
-  renderTransactions();
 });
 
-let allTransactions = [];
-let allTransactionsCopy = [];
-
-function applyFilters() {
+async function loadTransactions() {
   const minAmountFilter = document.getElementById("min-amount").value;
   const maxAmountFilter = document.getElementById("max-amount").value;
   const startDate = document.getElementById("start-date").value;
   const accountNumber = document.getElementById("account-number").value;
-//   const transactionType = document.getElementById("transaction-type").value;
-
-
-  allTransactions = allTransactions.filter(
-    (transaction) => !minAmountFilter || transaction.amount > minAmountFilter
-  );
-
-  renderTransactions();
-}
-async function loadTransactions() {
   const userInfo = getFromSessionStorage("userInfo");
   if (!userInfo) redirectTo("./sign-in.htm");
 
@@ -44,7 +30,7 @@ async function loadTransactions() {
 }
 function renderTransactions(allTransactions) {
   const transactionTable = document.getElementById("transaction-body");
-  if(allTransactions.length>0){
+  if (allTransactions.length > 0) {
     allTransactions.forEach((transaction) => {
       const tr = document.createElement("tr");
       const transactionId = document.createElement("td");
