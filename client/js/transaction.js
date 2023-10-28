@@ -2,34 +2,47 @@ window.onload = loadTransactions;
 
 document.getElementById("search-button").addEventListener("click", (e) => {
   e.preventDefault();
-  applyFilters();
+  loadTransactions();
 });
 
 async function loadTransactions() {
   const minAmountFilter = document.getElementById("min-amount").value;
   const maxAmountFilter = document.getElementById("max-amount").value;
   const startDate = document.getElementById("start-date").value;
+  const endDate = document.getElementById("end-date").value;
   const accountNumber = document.getElementById("account-number").value;
+  const transactionType = document.getElementsByClassName("transaction-type-class")[0].value;
   const userInfo = getFromSessionStorage("userInfo");
   if (!userInfo) redirectTo("./sign-in.htm");
 
+
   const { accountId } = userInfo;
 
-  const response = await loadTransactionRequest(accountId);
+  const response = await loadTransactionRequest(
+    accountId,
+    minAmountFilter,
+    maxAmountFilter,
+    startDate,
+    endDate,
+    accountNumber,
+    transactionType
+  );
 
   const responseBody = await response.json();
 
-  if (response.status == 200) {
-    allTransactions = responseBody;
-    allTransactionsCopy = allTransactions;
+  console.log(responseBody);
 
-    renderTransactions(allTransactions);
+  if (response.status == 200) {
+
+
+    renderTransactions(responseBody);
   } else {
     alertDanger("Error Loading Transactions");
   }
 }
 function renderTransactions(allTransactions) {
   const transactionTable = document.getElementById("transaction-body");
+  transactionTable.innerHTML = "";
   if (allTransactions.length > 0) {
     allTransactions.forEach((transaction) => {
       const tr = document.createElement("tr");
@@ -54,8 +67,8 @@ function renderTransactions(allTransactions) {
         date,
         type,
         amount,
-        routing,
         account,
+        routing,
         description
       );
       transactionTable.append(tr);
@@ -63,9 +76,17 @@ function renderTransactions(allTransactions) {
   }
 }
 
-async function loadTransactionRequest(accountId) {
+async function loadTransactionRequest(
+  accountId,
+  minAmount,
+  maxAmount,
+  startDate,
+  endDate,
+  accountNumber,
+  transactionType,
+) {
   const response = await fetch(
-    `${BASE_API_URL}/account/${accountId}/transaction`
+    `${BASE_API_URL}/account/${accountId}/filter?maxAmount=${maxAmount}&minAmount=${minAmount}&startDate=${startDate}&endDate=${endDate}&accountNumber=${accountNumber}&transactionType=${transactionType}`
   );
 
   return response;

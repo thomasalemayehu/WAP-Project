@@ -85,7 +85,7 @@ accountSchema.methods.generateCardNumber = function () {
 accountSchema.methods.generatePin = function () {
   let pin = "";
 
-  for (let i = 1; i < 4; i++) {
+  for (let i = 1; i < 5; i++) {
     pin += Math.floor(Math.random() * 10).toString();
   }
 

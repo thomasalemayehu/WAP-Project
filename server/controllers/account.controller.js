@@ -245,37 +245,67 @@ const controller = {
       accountNumber,
     } = req.query;
 
+  
+
+
+
+
     const account = await Account.findOne({ _id: id });
 
     if (!account) throw new Error("Account not found");
 
     let transactions = account.transactions;
 
-    if (minAmount)
+    console.log(transactions);
+
+
+
+    if (minAmount != "" && minAmount != null) {
       transactions = transactions.filter(
         (transaction) => transaction.amount > minAmount
       );
-    if (maxAmount)
+      console.log("Here 1");
+    }
+
+    if (maxAmount != null && maxAmount != "") {
       transactions = transactions.filter(
         (transaction) => transaction.amount < maxAmount
       );
-    if (transactionType)
+      console.log("Here 2");
+    }
+    console.log(transactionType != null);
+    if (transactionType != null && transactionType != "") {
       transactions = transactions.filter(
         (transaction) => transaction.transactionType == transactionType
       );
-    if (accountNumber)
+
+      console.log("here 3");
+    }
+
+    if (accountNumber != null && accountNumber != "") {
+      console.log(transactions);
       transactions = transactions.filter(
         (transaction) => transaction.accountNumber == accountNumber
       );
 
-    if (startDate)
+      console.log(accountNumber);
+      console.log("here 4");
+    }
+    if (startDate != null && startDate != "") {
       transactions = transactions.filter(
         (transaction) => new Date(transaction.date) > new Date(startDate)
       );
-    if (endDate)
+      console.log("here 5");
+    }
+
+    if (endDate != null && endDate != "") {
       transactions = transactions.filter(
         (transaction) => new Date(transaction.date) > new Date(endDate)
       );
+      console.log("here 6");
+    }
+
+    // console.log(transactions);
 
     res.status(200).json(transactions);
   },
