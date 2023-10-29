@@ -81,6 +81,12 @@ const controller = {
     const salt = await bcrypt.genSalt();
     const password = await bcrypt.hash(newPassword, salt);
 
+    const possibleUser = await User.findOne({ _id: account.userId });
+
+    const match = possibleUser.comparePassword(oldPassword);
+
+    if (!match) throw new Error("Incorrect password");
+
     const user = await User.findOneAndUpdate(
       { _id: account.userId },
       { password: password },
