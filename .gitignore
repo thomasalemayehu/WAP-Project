@@ -1,9 +1,4 @@
-server/node_modules
-server/.env
-
-# hostedprojects
-# 699Z9poQfHVyN47F
-
-
-# MicroBanka
-# zD90wgPKAxUB4INH
+node_modules
+.env
+.vscode
+.idea
